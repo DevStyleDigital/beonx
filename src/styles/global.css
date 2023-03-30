@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@property --percent {
+  syntax: '<number>';
+  initial-value: 0;
+  inherits: true;
+}
+
+body.reset {
+  font-family: 'Nunito Sans', sans-serif !important;
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  pointer-events: all !important;
+  overscroll-behavior: none !important;
+  margin-right: 0 !important;
+}
+
+.visually-hidden {
+  position: absolute!important;
+  width: 1px!important;
+  height: 1px!important;
+  padding: 0!important;
+  margin: -1px!important;
+  overflow: hidden!important;
+  clip: rect(0,0,0,0)!important;
+  white-space: nowrap!important;
+  border: 0!important;
+}
+.spinner-border {
+  vertical-align: -0.125em;
+  border: 0.25em solid;
+  border-right-color: transparent;
+}
+.scrollbar-flipped, .scrollbar-flipped > *{
+  transform: rotateX(180deg);
+}
+.custom-scrollbar-inputs::-webkit-scrollbar-thumb {
+  @apply bg-gray-600 bg-opacity-60 hover:bg-opacity-80 border-4 border-background border-solid
+}
+.custom-scrollbar-inputs.scrollbar-thumb-b-dark::-webkit-scrollbar-thumb {
+  @apply border-gray-900
+}
+.custom-scrollbar-inputs::-webkit-scrollbar {
+  @apply !block
+}
+.custom-scrollbar-inputs {
+  @apply scrollbar-w-4 scrollbar-track-transparent scrollbar-thumb-rounded-full
+}
+
+.title {
+  @apply text-lg font-bold
+}
+
+.select-tag > div {
+  @apply !shadow-none !border-b-[1px] !border-b-primary !border-t-[transparent] !border-x-[transparent] !rounded-none min-h-0
+}
+.select-tag > div > div:nth-child(1) {
+  @apply p-0 text-sm
+}
+.select-tag > div > div:nth-child(2) > div {
+  @apply py-0
+}
+
+[data-radix-popper-content-wrapper] {
+  @apply max-lg:!transform-none max-lg:[&>div]:!max-h-full
+}
+
+.input-default {
+  @apply w-full flex justify-between items-center border-b-[1px] py-1 transition-all border-opacity-75 focus:border-opacity-100 outline-none bg-transparent border-[var(--color)] placeholder:text-sm placeholder:text-gray-600
+}
+
+.phone-input {
+  @apply w-80 [&>div]:w-full border-primary max-md:w-full !items-start flex-col
+}
+.phone-input.invalid-number {
+  @apply !border-red-500 [&_label]:text-red-500
+}
+.phone-input.input-default input.invalid-number, .phone-input.input-default input.invalid-number:focus {
+  @apply !bg-white border-none
+}
+.phone-input.input-default input {
+  @apply w-full h-auto rounded-none border-none text-sm
+}
+.phone-input.input-default .flag-dropdown {
+  @apply border-none !bg-transparent
+}
+.phone-input.input-default .flag-dropdown .arrow {
+  @apply border-t-primary
+}
