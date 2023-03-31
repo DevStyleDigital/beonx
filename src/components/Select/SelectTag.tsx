@@ -101,7 +101,6 @@ export const MultiSelect: BTypes.FC<MultiSelectProps, {}, false> = ({
   required,
 }) => {
   const [mounted, setMounted] = useState(false);
-
   useEffect(() => setMounted(true), []);
 
   return (
@@ -110,7 +109,7 @@ export const MultiSelect: BTypes.FC<MultiSelectProps, {}, false> = ({
         {children}
         {mounted && optionsProp ? (
           <Select
-            defaultValue={defaultValue || []}
+            value={defaultValue || []}
             isMulti
             inputId={id}
             isDisabled={disabled}

@@ -3,6 +3,7 @@ import { usePercentages } from 'contexts/Percentages';
 import { useSteps } from 'contexts/Steps';
 import { InputType } from 'types/supabase';
 import { INPUTS_COMPONENTS } from './InputsComponents';
+import { SelectOption } from 'components/Select/SelectTag';
 
 export const Inputs = ({
   inputs,
@@ -43,6 +44,16 @@ export const Inputs = ({
               }
               defaultValue={stepsValues?.[step]?.[input.id]?.value as any}
               onValueChange={(value) => {
+                if (input.type === 'select-tag') {
+                  const noOptionIndex = (value as SelectOption[]).findIndex(
+                    ({ label }) => label === 'No',
+                  );
+                  if (noOptionIndex !== -1 && noOptionIndex === value.length - 1)
+                    value = [value[noOptionIndex]] as SelectOption[];
+                  else if (noOptionIndex !== -1 && noOptionIndex !== value.length - 1) {
+                    (value as SelectOption[]).splice(noOptionIndex, 1);
+                  }
+                }
                 setInputUpdated(input.id);
                 setStepsValues((prev) => ({
                   ...(prev || {}),

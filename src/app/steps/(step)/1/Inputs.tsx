@@ -16,14 +16,8 @@ const RMS_OPTIONS_SELECT_OPTIONS = [
   { label: 'Room Price Genie', value: 'room-price-genie' },
 ];
 const RMS_RESTAURANT_SELECT_OPTIONS = [
-  { label: 'OPERA Cloud', value: 'opera-cloud' },
-  { label: 'OPERA 5', value: 'opera5' },
-  { label: 'Suite 8', value: 'suite8' },
-  { label: 'HMS', value: 'hms' },
-  { label: 'Cloudbeds', value: 'cloudbeds' },
-  { label: 'Mews', value: 'mews' },
-  { label: 'Amadeus Hospitality Property Management', value: 'amadeus' },
-  { label: 'BEONx', value: 'beonx' },
+  { label: 'Yes', value: 'true' },
+  { label: 'No', value: 'false' },
 ];
 
 export const AllInputs = ({ inputs: inputsProps }: { inputs: any[] }) => {

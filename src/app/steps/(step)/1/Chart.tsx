@@ -78,11 +78,6 @@ export const Chart = () => {
       stepsValues[1]?.['rms-fb-system'],
       10 / 3,
     );
-    const restaurantMonetaryByOccupancy = getPercentOfRMS(
-      10,
-      stepsValues[1]?.['rms-restaurant-system'],
-      10 / 3,
-    );
     const expMonetaryByOccupancy = getPercentOfRMS(
       5,
       stepsValues[1]?.['rms-experience-system'],
@@ -92,7 +87,7 @@ export const Chart = () => {
     newData[0] = 100;
     newData[1] = roomsMonetaryByOccupancy[0];
     newData[2] = fbMonetaryByOccupancy[0];
-    newData[3] = restaurantMonetaryByOccupancy[0];
+    newData[3] = stepsValues[1]?.['rms-restaurant-system']?.value !== 'true' ? 10 : 0;
     newData[4] = expMonetaryByOccupancy[0];
     newData[5] = stepsValues[1]?.['revenue-retention']?.value !== 'true' ? 10 : 0;
     newData[6] = stepsValues[1]?.['guest-messaging']?.value !== 'true' ? 5 : 0;
@@ -100,13 +95,11 @@ export const Chart = () => {
     const valuesRms = [
       getValueRms(roomsMonetaryByOccupancy[1], 0.15 * currRevenue, 0.05),
       getValueRms(fbMonetaryByOccupancy[1], 0.05 * currRevenue, 0.05),
-      getValueRms(restaurantMonetaryByOccupancy[1], 0.05 * currRevenue, 0.05),
+      newData[4] ? 0.05 * currRevenue : 0,
       getValueRms(expMonetaryByOccupancy[1], 0.03 * currRevenue, 0.05),
       newData[5] ? 0.1 * currRevenue : 0,
       newData[6] ? 0.03 * currRevenue : 0,
     ];
-
-    console.log(valuesRms);
 
     const increase = valuesRms.reduce((acc, curr, i) => {
       return acc + curr;
@@ -133,7 +126,6 @@ export const Chart = () => {
         'guest-messaging',
         'rms-implemented',
         'rms-rooms-system',
-        'rms-experience-system',
         'rms-fb-system',
         'rms-restaurant-system',
       ].includes(inputUpdated)
