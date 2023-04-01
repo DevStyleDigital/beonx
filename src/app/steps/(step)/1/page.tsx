@@ -49,7 +49,7 @@ const Step = async () => {
               {
                 id: 'average-stay',
                 input_name: 'Average Length of Stay',
-                type: 'percent',
+                type: 'number',
               },
               {
                 id: 'average-guest-stay',
