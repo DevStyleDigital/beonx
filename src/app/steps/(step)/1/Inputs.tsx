@@ -15,9 +15,19 @@ const RMS_OPTIONS_SELECT_OPTIONS = [
   { label: 'RateGain', value: 'rategain' },
   { label: 'Room Price Genie', value: 'room-price-genie' },
 ];
-const RMS_RESTAURANT_SELECT_OPTIONS = [
+const RMS_FB_SELECT_OPTIONS = [
   { label: 'Yes', value: 'true' },
   { label: 'No', value: 'false' },
+];
+const RMS_RESTAURANT_SELECT_OPTIONS = [
+  { label: 'OPERA Cloud', value: 'opera-cloud' },
+  { label: 'OPERA 5', value: 'opera5' },
+  { label: 'Suite 8', value: 'suite8' },
+  { label: 'HMS', value: 'hms' },
+  { label: 'Cloudbeds', value: 'cloudbeds' },
+  { label: 'Mews', value: 'mews' },
+  { label: 'Amadeus Hospitality Property Management', value: 'amadeus' },
+  { label: 'BEONx', value: 'beonx' },
 ];
 
 export const AllInputs = ({ inputs: inputsProps }: { inputs: any[] }) => {
@@ -60,8 +70,7 @@ export const AllInputs = ({ inputs: inputsProps }: { inputs: any[] }) => {
     };
 
     addOrRemoveInput('rms-rooms-system', 'Rooms', RMS_OPTIONS_SELECT_OPTIONS);
-    addOrRemoveInput('rms-experience-system', 'EXPE', RMS_OPTIONS_SELECT_OPTIONS);
-    addOrRemoveInput('rms-fb-system', 'F & B', RMS_OPTIONS_SELECT_OPTIONS);
+    addOrRemoveInput('rms-fb-system', 'F & B', RMS_FB_SELECT_OPTIONS);
     addOrRemoveInput(
       'rms-restaurant-system',
       'Restaurant',

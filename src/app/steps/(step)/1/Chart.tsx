@@ -12,7 +12,6 @@ const LABELS = [
   'RMS Rooms',
   'RMS F & B',
   'RMS Restaurant',
-  'RMS Experience',
   'Revenue Retention',
   'Guest Messaging',
 ];
@@ -45,9 +44,9 @@ function getValueRms(validator: string, percentRms: number, decrement: number) {
 
 export const Chart = () => {
   const { stepsValues, inputUpdated } = useSteps();
-  const [data, setData] = useState([[100, 0, 0, 0, 0, 0, 0]]);
+  const [data, setData] = useState([[100, 0, 0, 0, 0, 0]]);
   const [totalLose, setTotalLose] = useState<string | undefined>();
-  const [values, setValues] = useState(['0', '0', '0', '0', '0', '0', '0']);
+  const [values, setValues] = useState(['0', '0', '0', '0', '0', '0']);
 
   function getData() {
     const roomsNumber = stepsValues[1]?.['rooms-number']?.value
@@ -73,32 +72,25 @@ export const Chart = () => {
       stepsValues[1]?.['rms-rooms-system'],
       20 / 3,
     );
-    const fbMonetaryByOccupancy = getPercentOfRMS(
-      10,
-      stepsValues[1]?.['rms-fb-system'],
-      10 / 3,
-    );
-    const expMonetaryByOccupancy = getPercentOfRMS(
+    const restaurantMonetaryByOccupancy = getPercentOfRMS(
       5,
-      stepsValues[1]?.['rms-experience-system'],
+      stepsValues[1]?.['rms-restaurant-system'],
       5 / 3,
     );
 
     newData[0] = 100;
     newData[1] = roomsMonetaryByOccupancy[0];
-    newData[2] = fbMonetaryByOccupancy[0];
-    newData[3] = stepsValues[1]?.['rms-restaurant-system']?.value !== 'true' ? 10 : 0;
-    newData[4] = expMonetaryByOccupancy[0];
-    newData[5] = stepsValues[1]?.['revenue-retention']?.value !== 'true' ? 10 : 0;
-    newData[6] = stepsValues[1]?.['guest-messaging']?.value !== 'true' ? 5 : 0;
+    newData[2] = stepsValues[1]?.['rms-fb-system']?.value !== 'true' ? 10 : 0;
+    newData[3] = restaurantMonetaryByOccupancy[0];
+    newData[4] = stepsValues[1]?.['revenue-retention']?.value !== 'true' ? 10 : 0;
+    newData[5] = stepsValues[1]?.['guest-messaging']?.value !== 'true' ? 5 : 0;
 
     const valuesRms = [
       getValueRms(roomsMonetaryByOccupancy[1], 0.15 * currRevenue, 0.05),
-      getValueRms(fbMonetaryByOccupancy[1], 0.05 * currRevenue, 0.05),
-      newData[4] ? 0.05 * currRevenue : 0,
-      getValueRms(expMonetaryByOccupancy[1], 0.03 * currRevenue, 0.05),
-      newData[5] ? 0.1 * currRevenue : 0,
-      newData[6] ? 0.03 * currRevenue : 0,
+      newData[2] ? 0.05 * currRevenue : 0,
+      getValueRms(restaurantMonetaryByOccupancy[1], 0.05 * currRevenue, 0.05),
+      newData[4] ? 0.1 * currRevenue : 0,
+      newData[5] ? 0.03 * currRevenue : 0,
     ];
 
     const increase = valuesRms.reduce((acc, curr, i) => {
@@ -170,7 +162,6 @@ export const Chart = () => {
                 '#5DEAD0',
                 '#26E3C0',
                 colors.green['100'],
-                '#009f81',
               ],
               borderColor: [
                 `${colors.orange}00`,
@@ -179,7 +170,6 @@ export const Chart = () => {
                 '#5DEAD0' + '00',
                 '#26E3C0' + '00',
                 `${colors.green['100']}00`,
-                '#009f81' + '00',
               ],
               label: 'Value in %',
               fill: true,
