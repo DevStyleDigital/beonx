@@ -2,10 +2,9 @@
 'use client';
 
 import colors from '@root/colors.json';
-import { Chart as ChartComp, type Dataset } from 'components/Chart';
+import { Chart as ChartComp } from 'components/Chart';
 import { useSteps } from 'contexts/Steps';
 import { useEffect, useState } from 'react';
-import { maskToCurrency } from 'utils/format-to-currency';
 
 const LABELS = [
   'Current Revenue',
@@ -44,7 +43,7 @@ function getValueRms(validator: string, percentRms: number, decrement: number) {
 
 export const Chart = () => {
   const { stepsValues, inputUpdated } = useSteps();
-  const [data, setData] = useState([[100, 0, 0, 0, 0, 0]]);
+  const [data, setData] = useState([100, 0, 0, 0, 0, 0]);
   const [totalLose, setTotalLose] = useState<string | undefined>();
   const [values, setValues] = useState(['0', '0', '0', '0', '0', '0']);
 
@@ -66,7 +65,7 @@ export const Chart = () => {
 
     const currRevenue = ((roomsNumber * occupancy) / 100) * 365 * adr;
 
-    const newData = [...data[0]];
+    const newData = [...data];
     const roomsMonetaryByOccupancy = getPercentOfRMS(
       20,
       stepsValues[1]?.['rms-rooms-system'],
@@ -77,13 +76,22 @@ export const Chart = () => {
       stepsValues[1]?.['rms-restaurant-system'],
       5 / 3,
     );
+    const newDataValues = [
+      roomsMonetaryByOccupancy[0],
+      stepsValues[1]?.['rms-fb-system']?.value !== 'true' ? 10 : 0,
+      restaurantMonetaryByOccupancy[0],
+      stepsValues[1]?.['revenue-retention']?.value !== 'true' ? 10 : 0,
+      stepsValues[1]?.['guest-messaging']?.value !== 'true' ? 5 : 0,
+    ];
 
-    newData[0] = 100;
-    newData[1] = roomsMonetaryByOccupancy[0];
-    newData[2] = stepsValues[1]?.['rms-fb-system']?.value !== 'true' ? 10 : 0;
-    newData[3] = restaurantMonetaryByOccupancy[0];
-    newData[4] = stepsValues[1]?.['revenue-retention']?.value !== 'true' ? 10 : 0;
-    newData[5] = stepsValues[1]?.['guest-messaging']?.value !== 'true' ? 5 : 0;
+    const currRevenueLine = 100 - newDataValues.reduce((acc, curr) => acc + curr, 0);
+
+    newData[0] = currRevenueLine;
+    newData[1] = newDataValues[0] ? 100 - newDataValues[0] : 0;
+    newData[2] = newDataValues[1] ? 100 - newDataValues[1] : 0;
+    newData[3] = newDataValues[2] ? 100 - newDataValues[2] : 0;
+    newData[4] = newDataValues[3] ? 100 - newDataValues[3] : 0;
+    newData[5] = newDataValues[4] ? 100 - newDataValues[4] : 0;
 
     const valuesRms = [
       getValueRms(roomsMonetaryByOccupancy[1], 0.15 * currRevenue, 0.05),
@@ -93,7 +101,7 @@ export const Chart = () => {
       newData[5] ? 0.03 * currRevenue : 0,
     ];
 
-    const increase = valuesRms.reduce((acc, curr, i) => {
+    const increase = valuesRms.reduce((acc, curr) => {
       return acc + curr;
     }, 0);
 
@@ -124,10 +132,10 @@ export const Chart = () => {
     )
       return () => {};
 
-    return setData([getData()]);
+    return setData(getData());
   }, [stepsValues]);
 
-  useEffect(() => setData([getData()]), []);
+  useEffect(() => setData(getData()), []);
 
   return (
     <div className="mr-8 lg:sticky max-lg:mb-10 flex flex-col items-center max-lg:w-full lg:top-24 w-1/2 h-80">
@@ -144,34 +152,50 @@ export const Chart = () => {
             tooltip: {
               callbacks: {
                 label: (ctx: any) => {
-                  const valueIndex = LABELS.indexOf(ctx.label);
-                  return `Value of: ${values[valueIndex]}`;
+                  const valueIndex = LABELS.indexOf(ctx.dataset.label);
+                  return `Value of ${ctx.dataset.label}: ${values[valueIndex]}`;
                 },
               },
             },
           },
         }}
         dataDatasets={{
-          labels: LABELS,
+          labels: ['Revenue', 'Potential Revenue'],
           datasets: [
             {
-              backgroundColor: [
-                colors.orange,
-                '#B7F6EA',
-                '#93F1E0',
-                '#5DEAD0',
-                '#26E3C0',
-                colors.green['100'],
-              ],
-              borderColor: [
-                `${colors.orange}00`,
-                '#B7F6EA' + '00',
-                '#93F1E0' + '00',
-                '#5DEAD0' + '00',
-                '#26E3C0' + '00',
-                `${colors.green['100']}00`,
-              ],
-              label: 'Value in %',
+              backgroundColor: `${colors.orange}`,
+              borderColor: `${colors.orange}`,
+              label: 'Current Revenue',
+              fill: true,
+            },
+            {
+              backgroundColor: '#B7F6EA',
+              borderColor: '#B7F6EA',
+              label: 'RMS Rooms',
+              fill: true,
+            },
+            {
+              backgroundColor: '#93F1E0',
+              borderColor: '#93F1E0',
+              label: 'RMS F & B',
+              fill: true,
+            },
+            {
+              backgroundColor: '#5DEAD0',
+              borderColor: '#5DEAD0',
+              label: 'RMS Restaurant',
+              fill: true,
+            },
+            {
+              backgroundColor: '#26E3C0',
+              borderColor: '#26E3C0',
+              label: 'Revenue Retention',
+              fill: true,
+            },
+            {
+              backgroundColor: `${colors.green['100']}`,
+              borderColor: `${colors.green['100']}`,
+              label: 'Guest Messaging',
               fill: true,
             },
           ],
