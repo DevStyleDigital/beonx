@@ -163,6 +163,7 @@ export const Chart = () => {
               },
             },
             tooltip: {
+              filter: (_: any, i: number) => i === 0,
               callbacks: {
                 label: (ctx: any) => {
                   const valueIndex = LABELS.indexOf(ctx.dataset.label);

@@ -42,6 +42,10 @@ export const Chart: BTypes.FC<{
       className="!w-full !h-full"
       options={{
         maintainAspectRatio: false,
+        interaction: {
+          mode: 'dataset',
+          intersect: false,
+        },
         scales: {
           y: {
             suggestedMin: 0,
