@@ -43,7 +43,7 @@ function getValueRms(validator: string, percentRms: number, decrement: number) {
 
 export const Chart = () => {
   const { stepsValues, inputUpdated } = useSteps();
-  const [data, setData] = useState([100, 0, 0, 0, 0, 0]);
+  const [data, setData] = useState([0, 0, 0, 0, 0, 0]);
   const [totalLose, setTotalLose] = useState<string | undefined>();
   const [values, setValues] = useState(['0', '0', '0', '0', '0', '0']);
 
@@ -62,6 +62,8 @@ export const Chart = () => {
             .replace(',', '.'),
         )
       : 0;
+
+    if (!roomsNumber || !adr || !occupancy) return [0, 0, 0, 0, 0, 0];
 
     const currRevenue = ((roomsNumber * occupancy) / 100) * 365 * adr;
 
@@ -90,21 +92,23 @@ export const Chart = () => {
       'revenue-retention',
       'guest-messaging',
     ];
+    const elementUpdated = dataValuesIds.indexOf(inputUpdated);
 
-    const currRevenueLine =
-      100 / newDataValues.reduce((acc, curr) => (!curr ? acc - 0.5 : acc), 2.5) || 1;
+    const currRevenueLine = 50;
 
-    const toIncrement = newDataValues.reduce((acc, curr) => (!curr ? acc + 10 : acc), 0);
+    const toIncrement = [
+      newDataValues.reduce((acc, curr) => (!curr ? acc + 10 : acc), 0),
+      newDataValues.reduce((acc, curr, i) => (!curr && i > 0 ? acc + 10 : acc), 0),
+      newDataValues.reduce((acc, curr, i) => (!curr && i > 1 ? acc + 10 : acc), 0),
+      newDataValues.reduce((acc, curr, i) => (!curr && i > 2 ? acc + 10 : acc), 0),
+    ];
 
-    newData[0] = currRevenueLine;
-    newData[1] = newDataValues[0] ? newDataValues[0] + toIncrement : 0;
-    newData[2] =
-      newDataValues[1] + (dataValuesIds.indexOf(inputUpdated) > 1 ? toIncrement : 0);
-    newData[3] =
-      newDataValues[2] + (dataValuesIds.indexOf(inputUpdated) > 2 ? toIncrement : 0);
-    newData[4] =
-      newDataValues[3] + (dataValuesIds.indexOf(inputUpdated) > 3 ? toIncrement : 0);
-    newData[5] = newDataValues[4];
+    newData[0] = currRevenueLine + toIncrement[0];
+    newData[1] = newDataValues[0] ? newDataValues[0] + toIncrement[0] : 0;
+    newData[2] = newDataValues[1] ? newDataValues[1] + toIncrement[1] : 0;
+    newData[3] = newDataValues[2] ? newDataValues[2] + toIncrement[2] : 0;
+    newData[4] = newDataValues[3] ? newDataValues[3] + toIncrement[3] : 0;
+    newData[5] = newDataValues[4] ? newDataValues[4] : 0;
 
     const valuesRms = [
       getValueRms(roomsMonetaryByOccupancy[1], 0.15 * currRevenue, 0.05),
@@ -174,7 +178,7 @@ export const Chart = () => {
           },
         }}
         dataDatasets={{
-          labels: ['Revenue', 'Potential Revenue'],
+          labels: ['', ''],
           datasets: [
             {
               backgroundColor: `${colors.orange}`,
