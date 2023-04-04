@@ -67,31 +67,44 @@ export const Chart = () => {
 
     const newData = [...data];
     const roomsMonetaryByOccupancy = getPercentOfRMS(
-      20,
+      60,
       stepsValues[1]?.['rms-rooms-system'],
-      20 / 3,
+      5,
     );
     const restaurantMonetaryByOccupancy = getPercentOfRMS(
-      5,
+      80,
       stepsValues[1]?.['rms-restaurant-system'],
-      5 / 3,
+      5,
     );
     const newDataValues = [
       roomsMonetaryByOccupancy[0],
-      stepsValues[1]?.['rms-fb-system']?.value !== 'true' ? 10 : 0,
+      stepsValues[1]?.['rms-fb-system']?.value !== 'true' ? 70 : 0,
       restaurantMonetaryByOccupancy[0],
-      stepsValues[1]?.['revenue-retention']?.value !== 'true' ? 10 : 0,
-      stepsValues[1]?.['guest-messaging']?.value !== 'true' ? 5 : 0,
+      stepsValues[1]?.['revenue-retention']?.value !== 'true' ? 90 : 0,
+      stepsValues[1]?.['guest-messaging']?.value !== 'true' ? 100 : 0,
+    ];
+    const dataValuesIds = [
+      'rms-rooms-system',
+      'rms-fb-system',
+      'rms-restaurant-system',
+      'revenue-retention',
+      'guest-messaging',
     ];
 
-    const currRevenueLine = 100 - newDataValues.reduce((acc, curr) => acc + curr, 0);
+    const currRevenueLine =
+      100 / newDataValues.reduce((acc, curr) => (!curr ? acc - 0.5 : acc), 2.5) || 1;
+
+    const toIncrement = newDataValues.reduce((acc, curr) => (!curr ? acc + 10 : acc), 0);
 
     newData[0] = currRevenueLine;
-    newData[1] = newDataValues[0] ? 100 - newDataValues[0] : 0;
-    newData[2] = newDataValues[1] ? 100 - newDataValues[1] : 0;
-    newData[3] = newDataValues[2] ? 100 - newDataValues[2] : 0;
-    newData[4] = newDataValues[3] ? 100 - newDataValues[3] : 0;
-    newData[5] = newDataValues[4] ? 100 - newDataValues[4] : 0;
+    newData[1] = newDataValues[0] ? newDataValues[0] + toIncrement : 0;
+    newData[2] =
+      newDataValues[1] + (dataValuesIds.indexOf(inputUpdated) > 1 ? toIncrement : 0);
+    newData[3] =
+      newDataValues[2] + (dataValuesIds.indexOf(inputUpdated) > 2 ? toIncrement : 0);
+    newData[4] =
+      newDataValues[3] + (dataValuesIds.indexOf(inputUpdated) > 3 ? toIncrement : 0);
+    newData[5] = newDataValues[4];
 
     const valuesRms = [
       getValueRms(roomsMonetaryByOccupancy[1], 0.15 * currRevenue, 0.05),

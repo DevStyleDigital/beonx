@@ -6,6 +6,7 @@ import {
   LineElement,
   Title,
   Tooltip,
+  Filler,
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
@@ -17,6 +18,7 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
+  Filler,
   Legend,
 );
 
