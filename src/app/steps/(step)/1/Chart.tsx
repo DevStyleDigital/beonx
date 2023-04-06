@@ -85,14 +85,6 @@ export const Chart = () => {
       stepsValues[1]?.['revenue-retention']?.value !== 'true' ? 90 : 0,
       stepsValues[1]?.['guest-messaging']?.value !== 'true' ? 100 : 0,
     ];
-    const dataValuesIds = [
-      'rms-rooms-system',
-      'rms-fb-system',
-      'rms-restaurant-system',
-      'revenue-retention',
-      'guest-messaging',
-    ];
-    const elementUpdated = dataValuesIds.indexOf(inputUpdated);
 
     const currRevenueLine = 50;
 
