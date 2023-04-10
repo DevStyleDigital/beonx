@@ -147,7 +147,7 @@ export const Chart = () => {
   useEffect(() => setData(getData()), []);
 
   return (
-    <div className="mr-8 lg:sticky max-lg:mb-10 flex flex-col items-center max-lg:w-full lg:top-24 w-1/2 h-80">
+    <div className="mr-8 lg:sticky max-lg:mb-20 flex flex-col items-center max-lg:w-full lg:top-24 w-1/2 h-80">
       <ChartComp
         data={data}
         options={{

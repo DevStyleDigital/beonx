@@ -17,6 +17,8 @@ type StepsNavigationContext<T extends string> = {
   setStepsValues: React.Dispatch<
     React.SetStateAction<StepsNavigationContext<T>['stepsValues']>
   >;
+  errors: { [key in string]?: string };
+  setErrors: React.Dispatch<React.SetStateAction<{ [key in string]?: string }>>;
   inputUpdated: string;
   setInputUpdated: React.Dispatch<React.SetStateAction<string>>;
 };
@@ -29,11 +31,21 @@ export const useSteps = <T extends string>(): StepsNavigationContext<T> =>
 
 export const StepsProvider: BTypes.FC<{}, {}, false> = ({ children }) => {
   const [stepsValues, setStepsValues] = usePersistedStepsValues<'1', any>();
+  const [errors, setErrors] = useState();
   const [inputUpdated, setInputUpdated] = useState('');
 
   return (
     <Context.Provider
-      value={{ stepsValues, setStepsValues, inputUpdated, setInputUpdated } as any}
+      value={
+        {
+          stepsValues,
+          setStepsValues,
+          inputUpdated,
+          setInputUpdated,
+          errors,
+          setErrors,
+        } as any
+      }
     >
       {children}
     </Context.Provider>

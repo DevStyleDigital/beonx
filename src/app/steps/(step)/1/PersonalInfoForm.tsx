@@ -8,11 +8,10 @@ import { useEffect, useState } from 'react';
 import PhoneInput from 'react-phone-input-2';
 
 export const PersonalInfoForm = () => {
-  const { stepsValues, setStepsValues, setInputUpdated } = useSteps<
+  const { stepsValues, setStepsValues, setInputUpdated, errors, setErrors } = useSteps<
     'name' | 'email' | 'phone'
   >();
   const [mounted, setMounted] = useState(false);
-  const [isInvalid, setIsInvalid] = useState(false);
   let invalidPhone = false;
 
   function handleValue(obj: {
@@ -62,12 +61,12 @@ export const PersonalInfoForm = () => {
       <div
         className={clsx('input-default phone-input', {
           '!border-none': !mounted,
-          'invalid-number': isInvalid,
+          'invalid-number': errors?.phone === 'invalid',
         })}
       >
         <Input.Label htmlFor="phone" className="block h-10 text-primary">
           Your Phone:{' '}
-          {isInvalid ? (
+          {errors?.phone === 'invalid' ? (
             <span className="text-xs text-gray-500">(invalid phone number)</span>
           ) : (
             ''
@@ -83,9 +82,14 @@ export const PersonalInfoForm = () => {
               const isValid =
                 number.length === (country?.format?.replaceAll(/[^.]/g, '').length || 0);
               invalidPhone = !isValid;
-              return isValid;
+              return errors?.phone === 'invalid';
             }}
-            onChange={() => setIsInvalid(invalidPhone)}
+            onChange={() =>
+              setErrors((prev) => ({
+                ...prev,
+                phone: invalidPhone ? 'invalid' : undefined,
+              }))
+            }
             value={(stepsValues?.['1']?.phone?.value as string) || ''}
             onBlur={({ target: { value } }) => {
               handleValue({ phone: { value, type: 'text' } });
