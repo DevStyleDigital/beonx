@@ -7,6 +7,17 @@
   initial-value: 0;
   inherits: true;
 }
+@property --tw-scale-x-bubble {
+  syntax: '<number>';
+  initial-value: 0.9;
+  inherits: true;
+}
+@property --tw-scale-y-bubble {
+  syntax: '<number>';
+  initial-value: 0.9;
+  inherits: true;
+}
+
 
 body.reset {
   font-family: 'Nunito Sans', sans-serif !important;
@@ -88,4 +99,31 @@ body.reset {
 }
 .phone-input.input-default .flag-dropdown .arrow {
   @apply border-t-primary
+}
+
+.chart-bubble-text {
+ @apply flex w-full text-xs gap-2 absolute left-1
+}
+.chart-bubble-text-first-section {
+ @apply flex w-full justify-between max-w-[49%]
+}
+.chart-bubble-text-second-section {
+ @apply flex w-full absolute justify-between ml-[50.2%] max-w-[49%]
+}
+
+.animation-bubble {
+  --tw-scale-x: var(--tw-scale-x-bubble);
+  --tw-scale-y: var(--tw-scale-y-bubble);
+  animation: bubble 0.5s ease-in-out forwards;
+}
+
+@keyframes bubble {
+  0% {
+    --tw-scale-x-bubble: 0.5;
+    --tw-scale-y-bubble: 0.5;
+  }
+  100% {
+    --tw-scale-x-bubble: 0.9;
+    --tw-scale-y-bubble: 0.9;
+  }
 }

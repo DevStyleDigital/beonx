@@ -144,6 +144,8 @@ export const Chart = () => {
     return setData(getData());
   }, [stepsValues]);
 
+  console.log(stepsValues);
+
   useEffect(() => setData(getData()), []);
 
   return (
