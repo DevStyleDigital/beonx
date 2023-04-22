@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 'use client';
 
 import { BubbleChart, ChartData } from 'components/Chart/Bubble';
@@ -22,26 +23,29 @@ export const Bubbles = () => {
 
   useEffect(() => {
     if (!INPUTS_ID.includes(inputUpdated)) return;
+    if (bubbles[inputUpdated] && stepsValues?.[2]?.[inputUpdated]?.value)
+      bubbles[inputUpdated].visible = true;
 
     const enabled = (stepsValues?.[2]?.[inputUpdated]?.value as string) === 'true';
     if (bubbles[inputUpdated]) bubbles[inputUpdated].fill = enabled;
     handleBubblesData(bubbles);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [stepsValues]);
 
   useEffect(() => {
-    const enabled = Object.entries(stepsValues?.[2]).map(([key, value]) =>
+    const enabled = Object.entries(stepsValues?.[2] || {}).map(([key, value]) =>
       value?.value === 'true' ? key : null,
     );
+
     enabled.forEach((key) => {
-      if (key && bubbles[key]) bubbles[key].fill = true;
+      if (!key) return;
+      if (bubbles[key] && stepsValues?.[2]?.[key]?.value) bubbles[key].visible = true;
+      if (bubbles[key]) bubbles[key].fill = true;
     });
     handleBubblesData(bubbles);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <div className="mr-8 lg:sticky max-lg:mb-10 flex flex-col items-center max-lg:w-full lg:top-24 w-[63%] h-[68vh]">
+    <div className="mr-8 max-[1242px]:hidden mb-10 flex flex-col items-center lg:top-24 w-[63%] h-[68vh]">
       <div className="w-full h-full relative">
         <div className="absolute -left-[calc(9rem+0.5rem)] text-sm top-1/2 translate-x-1/2 -rotate-90">
           <span className="uppercase">Ability to Execute</span>

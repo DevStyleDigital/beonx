@@ -3,7 +3,6 @@
 import * as SelectRadix from '@radix-ui/react-select';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
 import { clsx } from 'clsx';
-import { useWindowSize } from 'hooks/window-size';
 import React, { useState, createContext, useContext, useEffect } from 'react';
 import { InputSkeleton } from 'components/InputSkeleton';
 
@@ -78,65 +77,25 @@ export const SelectTrigger: BTypes.FC<SelectRadix.SelectTriggerProps, {}, false>
   );
 };
 
-export const SelectMobilePortal: BTypes.FC<SelectRadix.SelectPortalProps, {}, false> = ({
-  children,
-}) => {
-  return (
-    <SelectRadix.Portal
-      className="
-          fixed
-          z-[1000]
-          !bg-black
-          !bg-opacity-20
-          h-screen
-          w-screen
-          top-0
-          left-0
-          rounded-none
-
-          [&>div]:absolute
-          [&>div]:!flex-none
-          [&>div]:rounded-md
-          [&>div]:!bg-background
-          [&>div]:!max-h-[70vh]
-          [&>div]:!h-fit
-          [&>div]:!w-48
-          [&>div]:translate-y-[calc(-50%)]
-          [&>div]:left-1/2
-          [&>div]:translate-x-[calc(-50%)]
-          [&>div]:top-1/2
-          [&>div]:!m-0
-        "
-    >
-      {children}
-    </SelectRadix.Portal>
-  );
-};
-
 export const SelectPortal: BTypes.FC<SelectRadix.SelectPortalProps, {}, false> = ({
   children,
   ...props
 }) => {
-  const size = useWindowSize();
-  const Container = size.width && size.width < 1024 ? SelectMobilePortal : React.Fragment;
-
   return (
-    <Container>
-      <SelectRadix.Content
-        suppressHydrationWarning
-        {...props}
-        position="popper"
-        sideOffset={8}
-        className={clsx(
-          'bg-white z-50 rounded-md py-2 drop-shadow-lg max-h-48',
-          props.className,
-        )}
-      >
-        <SelectRadix.Viewport className="!overflow-y-auto py-3 custom-scrollbar-inputs">
-          {children}
-        </SelectRadix.Viewport>
-      </SelectRadix.Content>
-    </Container>
+    <SelectRadix.Content
+      suppressHydrationWarning
+      {...props}
+      position="popper"
+      sideOffset={8}
+      className={clsx(
+        'bg-white z-50 rounded-md py-2 drop-shadow-lg max-h-48',
+        props.className,
+      )}
+    >
+      <SelectRadix.Viewport className="!overflow-y-auto py-3 custom-scrollbar-inputs">
+        {children}
+      </SelectRadix.Viewport>
+    </SelectRadix.Content>
   );
 };
 

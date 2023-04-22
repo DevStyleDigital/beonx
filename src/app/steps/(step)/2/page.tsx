@@ -16,7 +16,7 @@ const Step = async () => {
   return (
     <FormControl>
       <div className="flex max-lg:flex-col-reverse items-center px-8 justify-between gap-5 flex-wrap-reverse">
-        <div className="flex flex-col lg:w-96 w-full overflow-y-auto max-h-[62vh] p-4">
+        <div className="flex max-[1243px]:mb-16 flex-col min-[1243px]:w-96 w-full min-[1243px]:overflow-y-auto min-[1243px]:max-h-[62vh] p-4">
           <Inputs inputs={inputs} inputsOrder={INPUTS_ID} step="2" stepByStep />
         </div>
 

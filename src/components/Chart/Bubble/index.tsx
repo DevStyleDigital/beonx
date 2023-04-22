@@ -5,6 +5,7 @@ export type ChartData = {
   color: string;
   label: string;
   fill: boolean;
+  visible: boolean;
   x: number;
   y: number;
   r: number;
@@ -25,6 +26,7 @@ export const BubbleChart: BTypes.FC<{
               minHeight: `${bubble.r * 2}rem`,
               maxWidth: `${bubble.r * 2 + bubble.r * 2 * 0.4}rem`,
               maxHeight: `${bubble.r * 2 + bubble.r * 2 * 0.4}rem`,
+              opacity: bubble.visible ? 1 : 0,
               borderColor: bubble.color,
               background: bubble.fill ? `${bubble.color}33` : 'transparent',
               zIndex: i + 1,
