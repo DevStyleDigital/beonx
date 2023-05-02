@@ -5,7 +5,7 @@ import { getDbServer } from 'services/supabase/server';
 const Step1 = async ({ params }: { params: { step: string } }) => {
   const database = getDbServer();
   const { data: inputs } = await database
-    .from('inputs_new')
+    .from('inputs')
     .select('id,input_name')
     .eq('step', params.step);
 

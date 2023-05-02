@@ -7,7 +7,7 @@ import { UpdateForm } from './UpdateForm';
 const Step1Inputs = async ({ params }: { params: { input: string } }) => {
   const database = getDbServer();
   const { data: inputs, error } = await database
-    .from('inputs_new')
+    .from('inputs')
     .select('*')
     .eq('id', params.input);
 

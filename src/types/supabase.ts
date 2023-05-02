@@ -16,7 +16,7 @@ export type InputType = {
 export interface Database {
   public: {
     Tables: {
-      inputs_new: {
+      inputs: {
         Row: InputType;
         Insert: InputType;
         Update: Partial<InputType>;

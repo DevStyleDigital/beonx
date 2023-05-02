@@ -1,16 +1,13 @@
 import { getDbServer } from 'services/supabase/server';
-import { InputType } from 'types/supabase';
 import { FormControl } from '../FormControl';
-import { Inputs } from '../Inputs';
 import { Chart } from './Chart';
 import { AllInputs } from './Inputs';
-import { INPUTS_ID } from './InputsId';
 import { PersonalInfoForm } from './PersonalInfoForm';
 
 const Step = async () => {
   const database = getDbServer();
   const { data: inputs, error: inputError } = await database
-    .from('inputs_new')
+    .from('inputs')
     .select('id,input_name,options,type,size')
     .eq('step', '1');
 

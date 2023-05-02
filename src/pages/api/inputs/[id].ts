@@ -20,7 +20,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
 
     if (req.method === 'PUT') {
       const data = req.body;
-      await supabase.from('inputs_new').update(data).eq('id', id);
+      await supabase.from('inputs').update(data).eq('id', id);
       return res.status(200).end('Updated');
     } else {
       res.setHeader('Allow', 'POST');

@@ -7,7 +7,7 @@ import { INPUTS_ID } from './InputsId';
 const Step = async () => {
   const database = getDbServer();
   const { data: inputs, error: inputError } = await database
-    .from('inputs_new')
+    .from('inputs')
     .select('id,input_name,options,type,size')
     .eq('step', '2');
 
