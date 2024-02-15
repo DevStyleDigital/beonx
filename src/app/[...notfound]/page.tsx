@@ -1,7 +1,7 @@
-import { notFound } from 'next/navigation';
+import { notFound } from "next/navigation";
 
 const NotFoundHandle = () => {
-  notFound();
+	notFound();
 };
 
 export default NotFoundHandle;

@@ -1,12 +1,12 @@
-'use client';
-import * as Icons from '@radix-ui/react-icons';
-import { FireDetailed } from 'assets/svgs/fire-detailed';
-import { Camera } from 'assets/svgs/camera';
-import { Cloud } from 'assets/svgs/cloud';
-import { Confirm } from 'assets/svgs/confirm';
-import { Fire } from 'assets/svgs/fire';
-import { Play } from 'assets/svgs/play';
-import { Star } from 'assets/svgs/star';
+"use client";
+import * as Icons from "@radix-ui/react-icons";
+import { FireDetailed } from "assets/svgs/fire-detailed";
+import { Camera } from "assets/svgs/camera";
+import { Cloud } from "assets/svgs/cloud";
+import { Confirm } from "assets/svgs/confirm";
+import { Fire } from "assets/svgs/fire";
+import { Play } from "assets/svgs/play";
+import { Star } from "assets/svgs/star";
 
 export const ChatBubbleIcon = Icons.ChatBubbleIcon as BTypes.FCIcon;
 export const PieChartIcon = Icons.PieChartIcon as BTypes.FCIcon;

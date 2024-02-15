@@ -1,3 +1,3 @@
-import sanitizeHtml from 'sanitize-html';
+import sanitizeHtml from "sanitize-html";
 
 export const purifyText = (text: string) => sanitizeHtml(text);
